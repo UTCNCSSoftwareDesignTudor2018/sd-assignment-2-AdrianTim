@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @Controller
 @RequestMapping(path = "/student")
 public class StudentController {
@@ -28,23 +29,30 @@ public class StudentController {
         this.examLogic = examLogic;
     }
 
+    @GetMapping(path = "/getAll")
+    public @ResponseBody List<StudentDTO> getAll(){
+
+        return studentLogic.getAll();
+
+    }
+
     @GetMapping(path = "/get")
     public @ResponseBody StudentDTO getStudent(@RequestParam int id){
         return studentLogic.getStudent(id);
     }
 
    @GetMapping(path = "/create")
-    public void createStudent(@RequestParam String name, @RequestParam String surname, @RequestParam String personalNumber, @RequestParam String address){
+    public  @ResponseBody void createStudent(@RequestParam String name, @RequestParam String surname, @RequestParam String personalNumber, @RequestParam String address){
         studentLogic.createStudent(name, surname, personalNumber, address);
    }
 
    @GetMapping(path = "/update")
-    public void updateStudent(@RequestParam int id, @RequestParam String name, @RequestParam String surname, @RequestParam String personalNumber, @RequestParam String address){
+    public  @ResponseBody void updateStudent(@RequestParam int id, @RequestParam String name, @RequestParam String surname, @RequestParam String personalNumber, @RequestParam String address){
         studentLogic.updateStudent(id, name, surname, personalNumber, address);
    }
 
    @GetMapping(path = "/enrol")
-    public void enrolStudent(@RequestParam int studentId, @RequestParam int courseId){
+    public  @ResponseBody void enrolStudent(@RequestParam int studentId, @RequestParam int courseId){
         courseLogic.enrolStudent(studentId, courseId);
    }
 
@@ -56,6 +64,11 @@ public class StudentController {
    @GetMapping(path = "/getExams")
     public @ResponseBody List<ExamDTO> getExams(@RequestParam int studentId){
         return examLogic.getStudentExams(studentId);
+   }
+
+   @GetMapping(path = "getStudentsEnrolled")
+    public @ResponseBody List<StudentDTO> getStudentsEnrolled(@RequestParam int courseId){
+        return studentLogic.getEnrolled(courseId);
    }
 
 }

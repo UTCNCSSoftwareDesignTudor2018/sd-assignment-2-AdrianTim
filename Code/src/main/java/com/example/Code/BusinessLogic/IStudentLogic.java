@@ -10,5 +10,7 @@ public interface IStudentLogic {
     List<StudentDTO> findStudentsByName(String name);
     void createStudent(String name, String surname, String address, String personalNumber);
     void updateStudent(int studentId, String newName, String newSurname, String newAddress, String newPersonalNumber);
+    List<StudentDTO> getAll();
+    List<StudentDTO> getEnrolled(int courseId);
 
 }

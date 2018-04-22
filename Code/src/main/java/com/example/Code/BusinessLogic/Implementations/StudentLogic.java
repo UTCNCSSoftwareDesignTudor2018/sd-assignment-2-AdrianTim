@@ -5,6 +5,7 @@ import com.example.Code.BusinessLogic.DataTransferObjects.StudentDTO;
 import com.example.Code.BusinessLogic.IStudentLogic;
 import com.example.Code.DataAccess.Entities.Course;
 import com.example.Code.DataAccess.Entities.Student;
+import com.example.Code.DataAccess.Repositories.CourseRepository;
 import com.example.Code.DataAccess.Repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,14 @@ import java.util.Set;
 public class StudentLogic implements IStudentLogic {
 
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
     private DTOFactory dtoFactory;
 
     @Autowired
-    public StudentLogic(StudentRepository studentRepository, DTOFactory dtoFactory){
+    public StudentLogic(StudentRepository studentRepository, DTOFactory dtoFactory, CourseRepository courseRepository){
         this.studentRepository = studentRepository;
         this.dtoFactory = dtoFactory;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -86,6 +89,28 @@ public class StudentLogic implements IStudentLogic {
         student.setPersonalNumber(newPersonalNumber);
 
         studentRepository.save(student);
+
+    }
+
+    @Override
+    public List<StudentDTO> getAll() {
+
+        List<StudentDTO> studentDTOS = new LinkedList<>();
+
+        studentRepository.findAll().forEach(s -> studentDTOS.add(dtoFactory.createDTO(s)));
+
+        return studentDTOS;
+
+    }
+
+    @Override
+    public List<StudentDTO> getEnrolled(int courseId) {
+
+        List<StudentDTO> studentDTOS = new LinkedList<>();
+
+        courseRepository.getOne(courseId).getStudents().forEach(s -> studentDTOS.add(dtoFactory.createDTO(s)));
+
+        return studentDTOS;
 
     }
 }

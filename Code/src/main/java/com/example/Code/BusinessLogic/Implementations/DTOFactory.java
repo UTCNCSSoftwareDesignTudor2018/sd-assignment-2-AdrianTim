@@ -3,9 +3,11 @@ package com.example.Code.BusinessLogic.Implementations;
 import com.example.Code.BusinessLogic.DataTransferObjects.CourseDTO;
 import com.example.Code.BusinessLogic.DataTransferObjects.ExamDTO;
 import com.example.Code.BusinessLogic.DataTransferObjects.StudentDTO;
+import com.example.Code.BusinessLogic.DataTransferObjects.TeacherDTO;
 import com.example.Code.DataAccess.Entities.Course;
 import com.example.Code.DataAccess.Entities.Exam;
 import com.example.Code.DataAccess.Entities.Student;
+import com.example.Code.DataAccess.Entities.Teacher;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -46,6 +48,21 @@ public class DTOFactory {
         examDTO.setTeacherName(exam.getCourse().getTeacher().getName());
 
         return examDTO;
+
+    }
+
+    public TeacherDTO createDTO(Teacher teacher){
+
+        TeacherDTO teacherDTO = new TeacherDTO();
+
+        teacherDTO.setId(teacher.getId());
+        teacherDTO.setName(teacher.getName());
+        teacherDTO.setSurname(teacher.getSurname());
+        teacherDTO.setCourses(new LinkedList<>());
+
+        teacher.getCourses().forEach(c -> teacherDTO.getCourses().add(createDTO(c)));
+
+        return teacherDTO;
 
     }
 

@@ -1,0 +1,67 @@
+<div ng-init="init()">
+
+    <div>
+
+
+        <h4>
+            Create student
+        </h4>
+
+        <form>
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                <input type="text" class="form-control" id="inputName" placeholder="Enter name" ng-model="studentName"></input>
+            </div>
+            <div class="form-group">
+                <label for="inputSurname">Surname</label>
+                <input type="text" class="form-control" id="inputSurname" placeholder="Enter surname" ng-model="studentSurname"></input>
+            </div>
+            <div class="form-group">
+                <label for="inputPersonalNumber">Personal number</label>
+                <input type="text" class="form-control" id="inputPersonalNumber" placeholder="Enter personal number" ng-model="studentPersonalNumber"></input>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="Enter address" ng-model="studentAddress"></input>
+            </div>
+            <button type="submit" class="btn btn-primary" ng-click="createStudent()">Create student</button>
+        </form>
+
+        <h4>
+            Create teacher
+        </h4>
+
+        <form>
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                <input type="text" class="form-control" id="inputName" placeholder="Enter name" ng-model="teacherName"></input>
+            </div>
+            <div class="form-group">
+                <label for="inputSurname">Surname</label>
+                <input type="text" class="form-control" id="inputSurname" placeholder="Enter surname" ng-model="teacherSurname"></input>
+            </div>
+            <button type="submit" class="btn btn-primary" ng-click="createTeacher()">Create teacher</button>
+        </form>
+
+        <span>Below there are two lists of students and teachers, click on one of them to go to their page, since there is no authentication</span>
+
+        <h4>
+            Students:
+        </h4>
+        <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action" ng-repeat="student in students" ng-click="openStudentPage(student.id)">
+                <span>{{student.name}} {{student.surname}}</span>
+            </button>
+        </div>
+        <h4>
+            Teachers:
+        </h4>
+        <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action" ng-repeat="teacher in teachers" ng-click="openTeacherPage(teacher.id)">
+                <span>{{teacher.name}} {{teacher.surname}}</span>
+            </button>
+        </div>
+
+    </div>
+
+</div>
